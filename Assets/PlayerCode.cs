@@ -6,9 +6,16 @@ public class PlayerCode : MonoBehaviour
 {
     public Route currentRoute;
 
-    int routePos;
+    [SerializeField] float speed = 5f;
+    [SerializeField] int routePos = 1;
     public int steps;
     bool isMoving;
+
+    [SerializeField] int passThrough;
+    void Start()
+    {
+        Debug.Log(currentRoute.childNodeList.Count + " spaces");
+    }
 
     void Update()
     {
@@ -16,11 +23,8 @@ public class PlayerCode : MonoBehaviour
         {
             steps = Random.Range(1, 6);
             Debug.Log(steps + " Rolled");
-
-            if(routePos + steps < currentRoute.childNodeList.Count)
-            {
-                StartCoroutine(Move());
-            }
+            
+            StartCoroutine(Move());
         }
     }
 
@@ -29,8 +33,23 @@ public class PlayerCode : MonoBehaviour
         if (isMoving) { yield break; }
         isMoving = true;
 
-        while(steps > 0) {
-            Vector3 nextPos = currentRoute.childNodeList[routePos + 1].position;
+        while (steps > 0)
+        {
+            Vector3 nextPos;
+            if (routePos == currentRoute.childNodeList.Count)
+            {
+                if (currentRoute.childNodeList[routePos - 1].tag == "Finish")
+                {
+                    yield break;
+                }
+                else
+                {
+                    nextPos = currentRoute.childNodeList[0].position;
+                    routePos = 0;
+                }
+            }
+
+            nextPos = currentRoute.childNodeList[routePos].position;
 
             while (moveToNext(nextPos)) { yield return null; }
 
@@ -38,13 +57,10 @@ public class PlayerCode : MonoBehaviour
             steps--;
             routePos++;
         }
-
         isMoving = false;
     }
 
-    bool moveToNext(Vector3 goal)
-    {
-        return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, 2f * Time.deltaTime));
-        
-    }
+    bool moveToNext(Vector3 goal) {
+        return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
+    } 
 }
