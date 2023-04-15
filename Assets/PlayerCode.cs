@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerCode : MonoBehaviour
 {
+    public EventController eventController;
     public Route currentRoute;
+
+    public bool allowTurn;
+
+    public int maxDiceNumber = 6;
 
     [SerializeField] float speed = 5f;
     [SerializeField] int routePos = 1;
@@ -19,13 +24,7 @@ public class PlayerCode : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isMoving)
-        {
-            steps = Random.Range(1, 6);
-            Debug.Log(steps + " Rolled");
-            
-            StartCoroutine(Move());
-        }
+
     }
 
     IEnumerator Move()
@@ -62,5 +61,18 @@ public class PlayerCode : MonoBehaviour
 
     bool moveToNext(Vector3 goal) {
         return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
-    } 
+    }
+    
+    public void RTD()
+    {
+        if (allowTurn && !isMoving)
+        {
+            steps = Random.Range(1, maxDiceNumber + 1);
+            Debug.Log(this.name + " Rolled " + steps);
+
+            StartCoroutine(Move());
+        }
+    }
+
+
 }

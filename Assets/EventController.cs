@@ -4,47 +4,47 @@ using UnityEngine;
 
 public class EventController : MonoBehaviour
 {
-    public List<string> playerTurn;
-    public int maxPlayers = 2;
-    public int currentTurn;
-
-    private int maxDiceNumber = 6;
-    private int diceRoll;
+    public PlayerCode player1;
+    public PlayerCode player2;
+    int currentTurn;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerTurn = new List<string>();
-        for (int i = 1; i < maxPlayers + 1; i++)
-        {
-            playerTurn.Add("Player " + i);
-            Debug.Log("Player " + i);
-        }
-
+        player1.allowTurn = true;
+        player2.allowTurn = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown("space"))
+        {
+            player1.RTD();
+            player2.RTD();
+
+            endTurn();
+        }
     }
 
     public void endTurn()
     {
-        if(currentTurn + 1 != maxPlayers)
+        if(currentTurn == 0)
         {
             currentTurn++;
+
+            player1.allowTurn = false;
+            player2.allowTurn = true;
         } else
         {
             currentTurn = 0;
+
+            player1.allowTurn = true;
+            player2.allowTurn = false;
         }
 
-        Debug.Log("It's currently the turn of " + playerTurn[currentTurn]);
+        Debug.Log("It's currently the turn of Player " + (currentTurn + 1));
     }
 
-    public void RTD()
-    {
-        diceRoll = Random.Range(1, maxDiceNumber);
-    }
 }
