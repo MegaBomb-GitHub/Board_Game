@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class DiceCheckZoneScript : MonoBehaviour {
 
-	Vector3 diceVelocity;
+	public Vector3 diceVelocity;
+
+	public int DiceNum;
+	public bool isCalled = false;
 
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -13,28 +16,30 @@ public class DiceCheckZoneScript : MonoBehaviour {
 
 	void OnTriggerStay(Collider col)
 	{
-		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f)
+		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f && isCalled == false)
 		{
 			switch (col.gameObject.name) {
-			case "Side1":
-				DiceNumberTextScript.diceNumber = 6;
+			case "1 Check":
+				DiceNum = 6;
 				break;
-			case "Side2":
-				DiceNumberTextScript.diceNumber = 5;
+			case "2 Check":
+				DiceNum = 5;
 				break;
-			case "Side3":
-				DiceNumberTextScript.diceNumber = 4;
+			case "3 Check":
+				DiceNum = 4;
 				break;
-			case "Side4":
-				DiceNumberTextScript.diceNumber = 3;
+			case "4 Check":
+				DiceNum = 3;
 				break;
-			case "Side5":
-				DiceNumberTextScript.diceNumber = 2;
+			case "5 Check":
+				DiceNum = 2;
 				break;
-			case "Side6":
-				DiceNumberTextScript.diceNumber = 1;
+			case "6 Check":
+				DiceNum = 1;
 				break;
 			}
+
+			isCalled = true;
 		}
 	}
 }

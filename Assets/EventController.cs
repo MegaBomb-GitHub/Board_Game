@@ -6,6 +6,9 @@ public class EventController : MonoBehaviour
 {
     public PlayerCode player1;
     public PlayerCode player2;
+
+    public DiceCheckZoneScript checkZone;
+
     int currentTurn;
 
     // Start is called before the first frame update
@@ -19,12 +22,14 @@ public class EventController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (checkZone.isCalled == true)
         {
-            player1.RTD();
-            player2.RTD();
+            player1.RTD(checkZone.DiceNum);
+            player2.RTD(checkZone.DiceNum);
 
-            endTurn();
+            Debug.Log("Object Dice rolled " + checkZone.DiceNum);
+            checkZone.isCalled = false;
+
         }
     }
 

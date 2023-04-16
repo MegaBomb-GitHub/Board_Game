@@ -63,14 +63,15 @@ public class PlayerCode : MonoBehaviour
         return goal != (transform.position = Vector3.MoveTowards(transform.position, goal, speed * Time.deltaTime));
     }
     
-    public void RTD()
+    public void RTD(int diceRoll)
     {
         if (allowTurn && !isMoving)
         {
-            steps = Random.Range(1, maxDiceNumber + 1);
+            steps = diceRoll;
             Debug.Log(this.name + " Rolled " + steps);
 
             StartCoroutine(Move());
+            allowTurn = false;
         }
     }
 
