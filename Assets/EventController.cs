@@ -26,7 +26,7 @@ public class EventController : MonoBehaviour
         {
             if (diceScript.stoppedRolling)
             {
-                if (!player1.isMoving || !player2.isMoving)
+                if (player1.isMoving == false || player2.isMoving == false)
                 {
                     endTurn();
                     diceScript.StartRoll();
