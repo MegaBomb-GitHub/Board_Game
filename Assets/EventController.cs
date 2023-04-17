@@ -7,6 +7,7 @@ public class EventController : MonoBehaviour
     public PlayerCode player1;
     public PlayerCode player2;
 
+    public DiceScript diceScript;
     public DiceCheckZoneScript checkZone;
 
     int currentTurn;
@@ -14,14 +15,20 @@ public class EventController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player1.allowTurn = true;
-        player2.allowTurn = false;
+        player1.allowTurn = false;
+        player2.allowTurn = true;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("space"))
+        {
+            endTurn();
+            diceScript.StartRoll();
+        }
+
         if (checkZone.isCalled == true)
         {
             player1.RTD(checkZone.DiceNum);
@@ -29,7 +36,6 @@ public class EventController : MonoBehaviour
 
             Debug.Log("Object Dice rolled " + checkZone.DiceNum);
             checkZone.isCalled = false;
-
         }
     }
 

@@ -16,7 +16,7 @@ public class DiceCheckZoneScript : MonoBehaviour {
 
 	void OnTriggerStay(Collider col)
 	{
-		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f && isCalled == false)
+		if (diceVelocity.x == 0f && diceVelocity.y == 0f && diceVelocity.z == 0f && !isCalled)
 		{
 			switch (col.gameObject.name) {
 			case "1 Check":
