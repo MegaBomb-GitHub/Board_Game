@@ -14,7 +14,7 @@ public class PlayerCode : MonoBehaviour
     [SerializeField] float speed = 5f;
     [SerializeField] int routePos = 1;
     public int steps;
-    bool isMoving;
+    public bool isMoving;
 
     [SerializeField] int passThrough;
     void Start()

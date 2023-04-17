@@ -11,7 +11,6 @@ public class EventController : MonoBehaviour
     public DiceCheckZoneScript checkZone;
 
     int currentTurn;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +24,14 @@ public class EventController : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            endTurn();
-            diceScript.StartRoll();
+            if (diceScript.stoppedRolling)
+            {
+                if (!player1.isMoving || !player2.isMoving)
+                {
+                    endTurn();
+                    diceScript.StartRoll();
+                }
+            }
         }
 
         if (checkZone.isCalled == true)
@@ -57,5 +62,4 @@ public class EventController : MonoBehaviour
 
         Debug.Log("It's currently the turn of Player " + (currentTurn + 1));
     }
-
 }

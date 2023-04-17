@@ -5,14 +5,16 @@ using UnityEngine;
 public class DiceCheckZoneScript : MonoBehaviour {
 
 	public Vector3 diceVelocity;
-
+	public DiceScript diceScript;
 	public int DiceNum;
 	public bool isCalled = false;
 
 	// Update is called once per frame
-	void FixedUpdate () {
-		diceVelocity = DiceScript.diceVelocity;
-	}
+
+	void FixedUpdate()
+    {
+		diceVelocity = diceScript.diceVelocity;
+    }
 
 	void OnTriggerStay(Collider col)
 	{

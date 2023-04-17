@@ -8,8 +8,9 @@ public class DiceScript : MonoBehaviour {
 	[SerializeField] Vector3 diceSpawn;
 
 	static Rigidbody rb;
-	public static Vector3 diceVelocity;
+	public Vector3 diceVelocity;
 
+	public bool stoppedRolling;
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
@@ -18,17 +19,14 @@ public class DiceScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		diceVelocity = rb.velocity;
-
-		if (Input.GetKeyDown (KeyCode.Space)) {
-			checkZone.DiceNum = 0;
-			float dirX = Random.Range (0, 500);
-			float dirY = Random.Range (0, 500);
-			float dirZ = Random.Range (0, 500);
-			transform.position = diceSpawn;
-			transform.rotation = Quaternion.identity;
-			rb.AddForce (transform.up * 500);
-			rb.AddTorque (dirX, dirY, dirZ);
-		}
+		if(diceVelocity != Vector3.zero)
+        {
+			stoppedRolling = false;
+        }
+        else
+        {
+			stoppedRolling = true;
+        }
 	}
 
 	public void StartRoll()
