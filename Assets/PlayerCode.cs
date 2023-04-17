@@ -6,6 +6,7 @@ public class PlayerCode : MonoBehaviour
 {
     public EventController eventController;
     public Route currentRoute;
+    public StateManager stateManager;
 
     public bool allowTurn;
 
@@ -35,10 +36,18 @@ public class PlayerCode : MonoBehaviour
         while (steps > 0)
         {
             Vector3 nextPos;
+            nextPos = currentRoute.childNodeList[routePos].position;
+
+            while (moveToNext(nextPos)) { yield return null; }
+
+            yield return new WaitForSeconds(0.1f);
+            routePos++;
+
             if (routePos == currentRoute.childNodeList.Count)
             {
                 if (currentRoute.childNodeList[routePos - 1].tag == "Finish")
                 {
+                    stateManager.winLevel(this.name);
                     yield break;
                 }
                 else
@@ -48,13 +57,8 @@ public class PlayerCode : MonoBehaviour
                 }
             }
 
-            nextPos = currentRoute.childNodeList[routePos].position;
-
-            while (moveToNext(nextPos)) { yield return null; }
-
-            yield return new WaitForSeconds(0.1f);
             steps--;
-            routePos++;
+            
         }
         isMoving = false;
     }

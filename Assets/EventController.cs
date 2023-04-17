@@ -14,9 +14,9 @@ public class EventController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player1.allowTurn = false;
-        player2.allowTurn = true;
-
+        player1.allowTurn = true;
+        player2.allowTurn = false;
+        currentTurn = 1;
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class EventController : MonoBehaviour
     {
         if(currentTurn == 0)
         {
-            currentTurn++;
+            currentTurn += 1;
 
             player1.allowTurn = false;
             player2.allowTurn = true;
